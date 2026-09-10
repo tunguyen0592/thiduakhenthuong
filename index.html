@@ -468,37 +468,7 @@
       </div>
     </div>
 
-    <div class="guide-step">
-      <div class="guide-step-num">6</div>
-      <div class="guide-step-body">
-        <h4>🔐 Đăng nhập & phân quyền Admin/User</h4>
-        <p>Ứng dụng <b>bắt buộc đăng nhập bằng Google</b> — dữ liệu được lưu tập trung, riêng theo từng tài khoản (Firebase), không dùng chung máy/trình duyệt như trước nữa. Bấm <b>"🔐 Đăng nhập"</b>; nếu tài khoản chưa được quản trị viên cấp quyền, hệ thống sẽ báo và không cho vào — liên hệ admin để được thêm email vào danh sách cấp phép. Tài khoản <b>admin</b> sẽ thấy thêm nút <b>"👑 Quản trị"</b> để xem danh sách toàn bộ người dùng, cấp/thu quyền sử dụng, và <b>xem/chỉnh sửa trực tiếp</b> dữ liệu của bất kỳ ai khi cần hỗ trợ, sửa hộ (có banner đỏ cảnh báo rõ ràng khi đang ở chế độ này để tránh sửa nhầm).</p>
-        <div class="guide-mock">
-          <div class="guide-mock-row">
-            <span class="guide-mock-btn outline">🔐 Đăng nhập</span>
-            <span class="guide-mock-btn outline">👑 Quản trị</span>
-            <span class="guide-mock-btn outline">🕒 Lịch sử phiên bản</span>
-          </div>
-          <div class="guide-mock-row"><span style="color:var(--green);font-weight:700;">☁ Đã đồng bộ</span><span class="guide-mock-label">· user@huflit.edu.vn · 08:32:10</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="guide-step">
-      <div class="guide-step-num">7</div>
-      <div class="guide-step-body">
-        <h4>⚙️ (Dành cho quản trị viên) Thiết lập Firebase lần đầu</h4>
-        <p>Việc đăng nhập/phân quyền ở Bước 6 chạy trên nền <b>Firebase</b> (Authentication + Firestore) của Google — cần quản trị viên thiết lập 1 lần: (1) tạo project tại <b>console.firebase.google.com</b>, (2) bật <b>Authentication → Sign-in method → Google</b>, (3) tạo <b>Firestore Database</b> và dán đúng Security Rules để đảm bảo mỗi user chỉ đọc/ghi được dữ liệu của mình còn admin đọc/ghi được của tất cả, (4) copy đoạn "Firebase config" dán vào biến <code>firebaseConfig</code> ở đầu file HTML, (5) vào thẳng Firestore Console tạo tay tài liệu đầu tiên trong collection <b>admins</b> (id = email của bạn) để có admin đầu tiên, và collection <b>authorizedUsers</b> để cấp quyền cho những email đầu tiên. Sau bước này, mọi việc cấp quyền tiếp theo có thể làm ngay trong nút "👑 Quản trị" của ứng dụng.</p>
-        <div class="guide-mock">
-          <div class="guide-mock-row"><span class="guide-mock-label">Firestore Security Rules (rút gọn)</span></div>
-          <div class="guide-mock-row">match /users/{uid} { allow read, write: if uid==myUid || isAdmin(); }</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="guide-tip">
-      💡 <b>Mẹo nhanh:</b> Nếu điểm PVCĐ chưa đủ 20 → thêm hoạt động phân loại "Tham gia"/"Tổ chức" cho người đó. Nếu 1 chip danh hiệu vẫn đỏ dù đã thêm hoạt động → bấm vào chip đó để xem còn thiếu đúng tiêu chí con nào. Nếu nhập nhiều hoạt động cùng lúc từ file JSON của người khác gửi → dùng nút <b>"⬆ Thêm hoạt động từ JSON"</b> ở tab Hoạt động, hệ thống tự đối chiếu theo tên để không tạo trùng người/trùng hoạt động. Muốn ghi nhận nhiều đợt giống hệt nhau (chỉ khác ngày/người tham gia) → ở danh sách hoạt động, tick chọn hoạt động mẫu rồi bấm <b>"📄 Tạo bản sao"</b> (cạnh nút "Chọn tất cả"), sau đó chỉnh lại bản sao vừa tạo. Nếu bấm "Đăng nhập" không có phản hồi → khả năng cao Firebase chưa được cấu hình đúng (xem Bước 7) hoặc domain đang mở chưa được thêm vào "Authorized domains" của Firebase Authentication.
-    </div>
+  
   </div>
 </section>
 
