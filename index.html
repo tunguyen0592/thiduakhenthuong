@@ -2157,9 +2157,9 @@ function openActivityModal(actId){
     const opts = titleKeysForPosition(posRaw);
     if(act.danhHieu && !opts.includes(act.danhHieu)) act.danhHieu = null;
     dyn.innerHTML = `
-      <h3>Chọn danh hiệu ghi nhận</h3>
+      <h3>Chọn danh hiệu ghi nhận (tùy chọn)</h3>
       <select id="a_title">
-        <option value="">— Chọn danh hiệu —</option>
+        <option value="">— Không chọn danh hiệu (chỉ lưu hoạt động) —</option>
         ${opts.map(k=>`<option value="${k}" ${act.danhHieu===k?'selected':''}>${k} — ${TITLES[k].name}</option>`).join('')}
       </select>
       <div id="a_title_criteria" style="margin-top:10px;"></div>
@@ -2217,7 +2217,15 @@ function openActivityModal(actId){
     act.participants = Array.from(document.querySelectorAll('.a_part_cb:checked')).map(cb=>cb.value);
     if(!act.name) return alert('Vui lòng nhập tên hoạt động.');
     if(act.participants.length===0) return alert('Vui lòng chọn ít nhất 1 người tham gia.');
-    if(!act.danhHieu) return alert('Vui lòng chọn danh hiệu ghi nhận cho hoạt động này.');
+    // Danh hiệu ghi nhận là TÙY CHỌN: nếu không chọn, hoạt động vẫn được lưu (chỉ tính điểm PVCĐ theo phân loại).
+    let overflow = false;
+    if(!act.danhHieu){
+      act.criteria = {};
+      if(isEdit) act.updatedAt = Date.now();
+      else{ act.createdAt = Date.now(); act.updatedAt = act.createdAt; list.push(act); }
+      closeModal(); renderAll();
+      return;
+    }
     const tpl = TITLES[act.danhHieu];
     const box = document.getElementById('a_title_criteria');
     const data = act.criteria[act.danhHieu] || {};
@@ -2245,7 +2253,6 @@ function openActivityModal(actId){
     }
     // Link mới nhập (nhiều dòng) — gán vào các vị trí còn trống, chưa bị người tham gia dùng ở hoạt động khác.
     const usedMap = getUsedCriteriaMap(act.danhHieu, act.id, act.participants);
-    let overflow = false;
     tpl.groups.forEach((g, gi)=>{
       if(g.type!=='links') return;
       const ta = box.querySelector(`[data-new-links="g${gi}"]`);
